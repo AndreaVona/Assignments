@@ -11,6 +11,23 @@ from random import random
 # seed random number generator
 seed(1)
 
+#
+from sensors import *
+
+# Creating Sensors for Environmental Station 1
+temperatureSensor1 = SensorTemperature(True)
+humiditySensor1 = SensorHumidity(True)
+windDirSensor1 = SensorWindDirection(True)
+windIntSensor1 = SensorWindIntensity(True)
+rainHeightSensor1 = SensorRainHeight(True)
+
+# Creating Sensors for Environmental Station 2
+temperatureSensor2 = SensorTemperature(True)
+humiditySensor2 = SensorHumidity(True)
+windDirSensor2 = SensorWindDirection(True)
+windIntSensor2 = SensorWindIntensity(True)
+rainHeightSensor2 = SensorRainHeight(True)
+
 # just some logs to check everything is working
 def on_connect(client, userdata, flags, rc):
     if rc==0:
@@ -63,76 +80,39 @@ while not client1.connected_flag and not client2.connected_flag: #wait in loop
 time.sleep(3)
 
 data=dict()     #data who is to be modified at each iteration with random values
-datas = dict()  # it keeps track of all the data sent by the 2 stations
-datas['data_station1'] = []
-datas['data_station2'] = []
-
-# all the datas are saved in a file called 'data.json'
-# used for per peristence
-try:
-    filePersistence = open('data.json')
-    stuff = filePersistence.read()
-    datas = json.loads(stuff)
-    filePersistence.close()
-except:
-    filePersistence = open('data.json', 'w')
-    filePersistence.write(json.dumps(datas, indent=3))
-    filePersistence.close()
 
 # handler of sig_int for making sure that
-# the clients would disconnect and the file for persistence
-# would be closed
+# the clients would disconnect 
 def signal_handler(sig, frame):
     print('You pressed Ctrl+C!')
     client1.disconnect()
     client2.disconnect()
-    filePersistence.close()
     sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 
 
 while True:
-    data["temperature"]=(random()*100)-50 #random value between [-50, 50]
-    data["temperature"]= str(round(data["temperature"], 2)) #truncates it to the second decimal
-    data["humidity"]=(random()*100)
-    data["humidity"]= str(round(data["humidity"], 2))
-    data["windDirection"]=(random()*360)
-    data["windDirection"]= str(round(data["windDirection"], 2))
-    data["windIntensity"]=(random()*100)
-    data["windIntensity"]= str(round(data["windIntensity"], 2))
-    data["rainHeight"]=(random()*50)
-    data["rainHeight"]= str(round(data["rainHeight"], 2))
+    data["temperature"]=temperatureSensor1.sendData()
+    data["humidity"]=humiditySensor1.sendData()
+    data["windDirection"]=windDirSensor1.sendData()
+    data["windIntensity"]=windIntSensor1.sendData()
+    data["rainHeight"]=rainHeightSensor1.sendData()
     data_out=json.dumps(data) # creates a string JSON object
     print("publish topic",topic, "data out= ",data_out)
     ret=client1.publish(topic,data_out,0)    # client1 (station-1) publishes data to topic
-    
-    datas['data_station1'].append(data)
-    filePersistence = open('data.json', 'w')
-    filePersistence.write(json.dumps(datas, indent=3))
-    filePersistence.close()
 
     time.sleep(3)
     client1.loop()
     
     # it's the same but for client2 (Station-2)
-    data["temperature"]=(random()*100)-50 
-    data["temperature"]= str(round(data["temperature"], 2))
-    data["humidity"]=(random()*100)
-    data["humidity"]= str(round(data["humidity"], 2))
-    data["windDirection"]=(random()*360)
-    data["windDirection"]= str(round(data["windDirection"], 2))
-    data["windIntensity"]=(random()*100)
-    data["windIntensity"]= str(round(data["windIntensity"], 2))
-    data["rainHeight"]=(random()*50)
-    data["rainHeight"]= str(round(data["rainHeight"], 2))
+    data["temperature"]=temperatureSensor2.sendData()
+    data["humidity"]=humiditySensor2.sendData()
+    data["windDirection"]=windDirSensor2.sendData()
+    data["windIntensity"]=windIntSensor2.sendData()
+    data["rainHeight"]=rainHeightSensor2.sendData()
     data_out=json.dumps(data)
     print("publish topic",topic, "data out= ",data_out)
     ret=client2.publish(topic,data_out,0)
-    
-    datas['data_station2'].append(data)
-    filePersistence = open('data.json', 'w')
-    filePersistence.write(json.dumps(datas, indent=3))
-    filePersistence.close()
 
     time.sleep(3)
     client2.loop()  
