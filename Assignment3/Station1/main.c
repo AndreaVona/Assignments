@@ -54,28 +54,26 @@ int main(void)
     while (1) {
 	srand(time(0));
 
-		char message[200];
+	char values[250];
 
-            //I generate random values.
-            int temp = ((rand()%99) - 49);
-            int hum = (rand()%100);
-            int winDir = (rand()%360);
-            int winInt = (rand()%100);
-            int rain = (rand()%50);
+	/*creating the random values*/
+        int temp = ((rand()%99) - 49);
+        int hum = (rand()%100);
+        int winDir = (rand()%360);
+        int winInt = (rand()%100);
+	int rain = (rand()%50);
 
-
-            //we prepare the values to send in the correct format
-            sprintf(message, "{\"deviceType\": \"station\",  \"temperature\": \"%d.%d\", \"humidity\": \"%d.%d\", \"windDirection\": \"%d.%d\", \"windIntensity\": \"%d.%d\", \"rainHeight\": \"%d.%d\"}", temp, (rand()%100), hum, (rand()%100), winDir, (rand()%100), winInt, (rand()%100), rain, (rand()%100));
-            //Since IOT-LAB doesn't support float, I used an int and a random int from 0 to 99 to rappresent a float.
+	/* Generating the message to send, using other random ints for the decimal parts */
+	sprintf(values, "{\"deviceType\": \"station\",  \"temperature\": \"%d.%d\", \"humidity\": \"%d.%d\", \"windDirection\": \"%d.%d\", \"windIntensity\": \"%d.%d\", \"rainHeight\": \"%d.%d\"}", temp, (rand()%100), hum, (rand()%100), winDir, (rand()%100), winInt, (rand()%100), rain, (rand()%100));
 		
-		xtimer_sleep(20); //publish values every 20 seconds
+        xtimer_sleep(20); //publish values every 20 seconds
 
-		/* send the LoRaWAN message */
-		printf("Sending message: %s\n", message);
-		uint8_t ret = semtech_loramac_send(&loramac, (uint8_t *)message, strlen(message));
+	/* send the LoRaWAN message */
+	printf("Sending message: %s\n", values);
+		uint8_t ret = semtech_loramac_send(&loramac, (uint8_t *)message, strlen(values));
         if (ret != SEMTECH_LORAMAC_TX_DONE) {
-			printf("Cannot send message '%s', ret code: %d\n", message, ret);
-		}
+		printf("Cannot send message '%s', ret code: %d\n", values, ret);
+	}
 
 
     }
