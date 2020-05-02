@@ -70,7 +70,7 @@ int main(void)
 
 	/* send the LoRaWAN message */
 	printf("Sending message: %s\n", values);
-		uint8_t ret = semtech_loramac_send(&loramac, (uint8_t *)message, strlen(values));
+		uint8_t ret = semtech_loramac_send(&loramac, (uint8_t *)values, strlen(values));
         if (ret != SEMTECH_LORAMAC_TX_DONE) {
 		printf("Cannot send message '%s', ret code: %d\n", values, ret);
 	}
