@@ -39,6 +39,7 @@ int main(void)
     semtech_loramac_set_appeui(&loramac, appeui);
     semtech_loramac_set_appkey(&loramac, appkey);
 
+    srand(time(0));
 
 
     /* start the OTAA join procedure */
@@ -52,8 +53,6 @@ int main(void)
 
 
     while (1) {
-	srand(time(0));
-
 	char values[250];
 
 	/*creating the random values*/
