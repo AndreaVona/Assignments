@@ -18,3 +18,16 @@ Youtube video: https://youtu.be/3snaKsYN2d8
 ## Second Assignment
 
 Requirements: http://ichatz.me/Site/InternetOfThings2020-Assignment2
+
+Link to the article: 
+
+Youtube video: 
+
+
+## Third Assignment
+
+Requirements: http://ichatz.me/Site/InternetOfThings2020-Assignment3
+
+Link to the article: 
+
+Youtube video: 
