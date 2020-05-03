@@ -19,15 +19,15 @@ Youtube video: https://youtu.be/3snaKsYN2d8
 
 Requirements: http://ichatz.me/Site/InternetOfThings2020-Assignment2
 
-Link to the article: 
+Link to the article: https://www.linkedin.com/pulse/connecting-two-riot-os-stations-thingsboard-andrea-vona/
 
-Youtube video: 
+Youtube video: https://www.youtube.com/watch?v=AhDYf8slAL0
 
 
 ## Third Assignment
 
 Requirements: http://ichatz.me/Site/InternetOfThings2020-Assignment3
 
-Link to the article: 
+Link to the article: https://www.linkedin.com/pulse/connecting-two-riot-os-virtual-real-environmental-stations-vona
 
-Youtube video: 
+Youtube video: https://youtu.be/2W9Jm2o8BHA
