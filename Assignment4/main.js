@@ -15,7 +15,6 @@ if ( 'Accelerometer' in window ) {
   newMeasurement.y = e.target.y;
   newMeasurement.z = e.target.z;
 
-  var message = newMeasurement;
   /* Code to detect movement, uses .7 as threshold for length of Acc vector */
   var accZ = newMeasurement.z;
   var movement = Math.sqrt(Math.pow(newMeasurement.x, 2) + Math.pow(newMeasurement.y, 2) + Math.pow(accZ, 2));
@@ -24,6 +23,8 @@ if ( 'Accelerometer' in window ) {
   } else {
 	activity.innerHTML = '<div class=\"alert alert-info text-center\">Standing still</div>';
   }
+
+  var message = newMeasurement;
   var msgEdge = JSON.stringify(message);
 
   //sending data to thingsboard
